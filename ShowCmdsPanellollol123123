@@ -166,10 +166,10 @@ local commandCategories = {
             "dexexplorer/dex - Open Dex Explorer",
             "infiniteyield/inf - Infinite Yield",
             "namelessadmin/na - Nameless Admin",
-            "namelessadminv2/nav2 - Nameless Admin V2",
+            "namelessadminv2/nav2 - NAV2",
             "players/plrs - List players",
             "reset/re - Reset character",
-            "serverhop/shop - Change server",
+            "serverhop/shop - Chnage server",
             "unctest - Unctest for exec"
         }
     },
