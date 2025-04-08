@@ -305,7 +305,7 @@ local commandCategories = {
             "f3x/fex - F3X building tools",
             "hugtool - Hug tool",
             "rochips/rc - Starts RoChipsPanel",
-            "uwuchat [text] - UwU chat :3 (works on some games)",
+            "uwuchat [text] - UwU chat :3 (WIP)",
             "toolgiver - Tool giver",
             "fakelag/flag - Fake lag",
             "winobby - Win obby",
