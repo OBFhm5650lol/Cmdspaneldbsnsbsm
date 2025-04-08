@@ -1,0 +1,468 @@
+-- Command Panel Script Cmdspanel
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "CommandPanel"
+screenGui.ResetOnSpawn = false
+screenGui.Enabled = false
+screenGui.Parent = PlayerGui
+
+-- Create Main Frame
+local frame = Instance.new("Frame")
+frame.Name = "Main"
+frame.Size = UDim2.new(0.3, 0, 0.4, 0)
+frame.Position = UDim2.new(0.35, 0, 0.3, 0)
+frame.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+frame.BackgroundTransparency = 0.1
+frame.BorderSizePixel = 0
+frame.ClipsDescendants = true
+frame.Parent = screenGui
+
+-- UI Corners and Borders
+local uiCorner = Instance.new("UICorner")
+uiCorner.CornerRadius = UDim.new(0, 8)
+uiCorner.Parent = frame
+
+local border = Instance.new("UIStroke")
+border.Color = Color3.fromRGB(80, 80, 90)
+border.Thickness = 1
+border.Transparency = 0.5
+border.Parent = frame
+
+local pulseOutline = Instance.new("UIStroke")
+pulseOutline.Color = Color3.fromRGB(150, 150, 150)
+pulseOutline.Thickness = 2
+pulseOutline.Transparency = 1
+pulseOutline.Parent = frame
+
+-- Dragging Implementation
+local dragStartPos, frameStartPos, isDragging
+
+local header = Instance.new("Frame")
+header.Name = "Header"
+header.Size = UDim2.new(1, 0, 0.12, 0)
+header.Position = UDim2.new(0, 0, 0, 0)
+header.BackgroundTransparency = 1
+header.ZIndex = 10
+header.Parent = frame
+
+-- Improved Dragging Function
+local dragging = false
+local dragInput, dragStart, startPos
+
+header.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = frame.Position
+
+		-- Pulse effect when starting drag
+		pulseOutline.Transparency = 0
+		TweenService:Create(pulseOutline, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			Transparency = 1
+		}):Play()
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+RunService.RenderStepped:Connect(function()
+	if dragging and dragInput then
+		local delta = dragInput.Position - dragStart
+		frame.Position = UDim2.new(
+			startPos.X.Scale, startPos.X.Offset + delta.X,
+			startPos.Y.Scale, startPos.Y.Offset + delta.Y
+		)
+	end
+end)
+
+-- Header Visuals
+local headerBackground = Instance.new("Frame")
+headerBackground.Size = UDim2.new(1, 0, 1, 0)
+headerBackground.Position = UDim2.new(0, 0, 0, 0)
+headerBackground.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+headerBackground.BackgroundTransparency = 0.2
+headerBackground.BorderSizePixel = 0
+headerBackground.ZIndex = 1
+headerBackground.Parent = header
+
+local headerCorner = Instance.new("UICorner")
+headerCorner.CornerRadius = UDim.new(0, 8)
+headerCorner.Parent = headerBackground
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(0.7, 0, 0.8, 0)
+title.Position = UDim2.new(0.1, 0, 0.1, 0)
+title.BackgroundTransparency = 1
+title.Text = "COMMAND PANEL"
+title.TextColor3 = Color3.fromRGB(220, 220, 220)
+title.TextScaled = true
+title.Font = Enum.Font.GothamSemibold
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.ZIndex = 2
+title.Parent = header
+
+-- Close Button
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0.1, 0, 0.7, 0)
+closeButton.Position = UDim2.new(0.88, 0, 0.15, 0)
+closeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 65)
+closeButton.BackgroundTransparency = 0.7
+closeButton.Text = "×"
+closeButton.TextColor3 = Color3.fromRGB(220, 220, 220)
+closeButton.TextSize = 24
+closeButton.Font = Enum.Font.GothamBold
+closeButton.ZIndex = 2
+closeButton.Parent = header
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0.5, 0)
+closeCorner.Parent = closeButton
+
+-- Command List
+local scrollingFrame = Instance.new("ScrollingFrame")
+scrollingFrame.Size = UDim2.new(0.95, 0, 0.85, 0)
+scrollingFrame.Position = UDim2.new(0.025, 0, 0.13, 0)
+scrollingFrame.BackgroundTransparency = 1
+scrollingFrame.ScrollBarThickness = 4
+scrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 110)
+scrollingFrame.Parent = frame
+
+local categoriesContainer = Instance.new("Frame")
+categoriesContainer.Size = UDim2.new(1, 0, 1, 0)
+categoriesContainer.BackgroundTransparency = 1
+categoriesContainer.Parent = scrollingFrame
+
+local categoriesLayout = Instance.new("UIListLayout")
+categoriesLayout.Padding = UDim.new(0, 15) -- Increased padding between categories
+categoriesLayout.Parent = categoriesContainer
+
+-- Organized Command Categories
+local commandCategories = {
+    {
+        name = "PANEL & UTILITY",
+        color = Color3.fromRGB(180, 180, 255),
+        commands = {
+            "",
+            "clear - Clear chat",
+            "cmds - Show command list",
+            "dexexplorer/dex - Open Dex Explorer",
+            "infiniteyield/inf - Infinite Yield",
+            "namelessadmin/na - Nameless Admin",
+            "namelessadminv2/nav2 - Nameless Admin V2",
+            "players/plrs - List players",
+            "reset/re - Reset character",
+            "serverhop/shop - Change server",
+            "unctest - Unctest for exec"
+        }
+    },
+    {
+        name = "VIEW & CAMERA",
+        color = Color3.fromRGB(180, 255, 180),
+        commands = {
+            "",
+            "changerig/rig - Change character rig",
+            "fov [value] - Field of view",
+            "fullbright/fb - Bright world",
+            "invistoggle - Toggle invisibility",
+            "lay - Lay down",
+            "nofog - Remove fog",
+            "sit - Sit down",
+            "spin [value] - Spin camera",
+            "unfullbright/unfb - Normal lighting",
+            "unview - Stop viewing",
+            "unxray - Disable xray",
+            "view [plr] - View player",
+            "xray - See through walls",
+            "zoom [value] - Camera zoom"
+        }
+    },
+    {
+        name = "MOVEMENT",
+        color = Color3.fromRGB(255, 180, 180),
+        commands = {
+            "",
+            "bhop - Bunny hop",
+            "clip - Disable noclip",
+            "fly/f - Enable flight (req tpwalk)",
+            "unfly/uf - Disable flight",
+            "stoptpwalk/stpw - Stop teleport",
+            "tpwalk/tpw - Teleport walk",
+            "tpwalkspeed/tpws [value] - TP walk speed",
+            "grav [value] - Set gravity",
+            "infjump - Infinite jump",
+            "jumppower/jp [value] - Jump power",
+            "noclip - Walk through walls",
+            "resetwalkspeed/resetws - Reset speed",
+            "unbhop - Stop bunny hop",
+            "walkspeed/ws [value] - Speed"
+        }
+    },
+    {
+        name = "PLAYER CONTROL",
+        color = Color3.fromRGB(255, 180, 255),
+        commands = {
+            "" ,
+            "activatealltools/aat - Activate all tools",
+            "control npc/cn - Control NPC",
+            "dropalltools/dat - Drop all tools",
+            "fling [plr] - Fling player",
+            "flingall - Fling everyone",
+            "graballtools/gat - Grab all tools",
+            "hitbox [value] - Resize hitbox",
+            "kill [plr] - Kill player (req sword)",
+            "loopfling/lfling - Loop fling",
+            "loopkill/lkill - Loop kill (req gun/sword)",
+            "orbit - Orbit player",
+            "tpto [plr] - Teleport to player"
+        }
+    },
+    {
+        name = "VISUALS & ESP",
+        color = Color3.fromRGB(180, 255, 255),
+        commands = {
+            "",
+            "aimassist/aim - aimlock",
+            "boxesp/besp - Box ESP",
+            "disableboxesp/dbesp - Disable Box ESP",
+            "disablenameesp/dnesp - Disable Name ESP",
+            "drawchat - Draw chat",
+            "esp - Enable Highlight ESP",
+            "nameesp/nesp - Name ESP",
+            "unesp - Disable Highlight ESP"
+        }
+    },
+    {
+        name = "PROTECTION",
+        color = Color3.fromRGB(0, 180, 255),
+        commands = {
+            "",
+            "antifling/af - Anti fling",
+            "antikick/ak - Anti kick",
+            "antilag/al - Anti lag",
+            "unantifling/unaf - Disable anti fling",
+            "unfakelag/unflag - Disable fake lag",
+            "voidprotection/vp - Void protection",
+            "voidprotectionoff/dvp - Disable void protection"
+        }
+    },
+    {
+        name = "OBJECT CONTROL",
+        color = Color3.fromRGB(255, 200, 150),
+        commands = {
+            "",
+            "blackhole/bh - Create blackhole",
+            "bringunachored/bring ua - Bring unachored parts",
+            "disableblackhole/dbh - Disable blackhole",
+            "invertgrav - unachored Invert gravity",
+            "uninvertgrav - Stops Inverting Gravity",
+            "resetuagrav - Reset unachored gravity",
+            "setuagrav [value] - Set unachored gravity",
+            "moveparts/mp - Move parts",
+            "ringparts/rp - Ring parts",
+            "ringparts/rp radius [value] - Set ring radius",
+            "ringparts/rp speed [value] - Set ring speed",
+            "ringpartsv2/rpv2 - Ring parts V2"
+        }
+    },
+    {
+        name = "ANIMATION & EFFECTS",
+        color = Color3.fromRGB(200, 150, 255),
+        commands = {
+            "",
+            "afem (R15) - Fe Free Emote",
+            "energize/ee (R15/R6) - Energize anima gui",
+            "animationspeed/as [value] - Animation speed",
+            "disabletfling/dtf - Disable tool fling",
+            "emitteroff/ef - Disable emitters",
+            "emitteron/en - Enable emitters",
+            "enabletfling/etf - Enable touchFling",
+            "disabletfling/dtf - Disables touchFling"
+        }
+    },
+    {
+        name = "MISC",
+        color = Color3.fromRGB(109, 110, 108),
+        commands = {
+            "",
+            "f3x/fex - F3X building tools",
+            "hugtool - Hug tool",
+            "rochips/rc - Starts RoChipsPanel",
+            "uwuchat [text] - UwU chat :3",
+            "toolgiver - Tool giver",
+            "fakelag/flag - Fake lag",
+            "winobby - Win obby",
+            "fakechat - Fake chat message",
+            "hitblox - Show hitboxes",
+            "pshade - Pixel shading",
+            "susgui/ss - 😳",
+            "pcr - Starts PartControllerRemote",
+            "🍪"
+        }
+    }
+}
+
+-- Function to create category
+local function createCategory(categoryData)
+    local categoryFrame = Instance.new("Frame")
+    categoryFrame.Size = UDim2.new(1, 0, 0, 0)
+    categoryFrame.BackgroundTransparency = 1
+    categoryFrame.AutomaticSize = Enum.AutomaticSize.Y
+    categoryFrame.Parent = categoriesContainer
+    
+    -- Category header with proper spacing
+    local categoryHeader = Instance.new("TextLabel")
+    categoryHeader.Size = UDim2.new(1, 0, 0, 25)
+    categoryHeader.BackgroundTransparency = 1
+    categoryHeader.Text = "─── "..categoryData.name.." ───"
+    categoryHeader.TextColor3 = categoryData.color
+    categoryHeader.TextSize = 14
+    categoryHeader.Font = Enum.Font.GothamBold
+    categoryHeader.TextXAlignment = Enum.TextXAlignment.Center
+    categoryHeader.Parent = categoryFrame
+    
+    -- Add padding below header
+    local headerPadding = Instance.new("Frame")
+    headerPadding.Size = UDim2.new(1, 0, 0, 5)
+    headerPadding.BackgroundTransparency = 1
+    headerPadding.Parent = categoryFrame
+    
+    -- Create commands container with proper layout
+    local commandsContainer = Instance.new("Frame")
+    commandsContainer.Size = UDim2.new(1, 0, 0, 0)
+    commandsContainer.BackgroundTransparency = 1
+    commandsContainer.AutomaticSize = Enum.AutomaticSize.Y
+    commandsContainer.Parent = categoryFrame
+    
+    local commandsLayout = Instance.new("UIListLayout")
+    commandsLayout.Padding = UDim.new(0, 5)
+    commandsLayout.Parent = commandsContainer
+    
+    -- Add commands to container
+    for _, cmd in ipairs(categoryData.commands) do
+        local commandFrame = Instance.new("Frame")
+        commandFrame.Size = UDim2.new(1, -10, 0, 28) -- Reduced width for padding
+        commandFrame.Position = UDim2.new(0.05, 0, 0, 0) -- Centered with padding
+        commandFrame.BackgroundTransparency = 0.9
+        commandFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+        commandFrame.Parent = commandsContainer
+        
+        local commandCorner = Instance.new("UICorner")
+        commandCorner.CornerRadius = UDim.new(0, 4)
+        commandCorner.Parent = commandFrame
+        
+        local commandLabel = Instance.new("TextLabel")
+        commandLabel.Size = UDim2.new(1, -10, 1, 0)
+        commandLabel.Position = UDim2.new(0, 10, 0, 0)
+        commandLabel.BackgroundTransparency = 1
+        commandLabel.Text = cmd
+        commandLabel.TextColor3 = Color3.fromRGB(200, 200, 210)
+        commandLabel.TextSize = 13
+        commandLabel.TextXAlignment = Enum.TextXAlignment.Left
+        commandLabel.Font = Enum.Font.Gotham
+        commandLabel.Parent = commandFrame
+        
+        -- Hover effects
+        commandFrame.MouseEnter:Connect(function()
+            TweenService:Create(commandFrame, TweenInfo.new(0.2), {
+                BackgroundTransparency = 0.85,
+                BackgroundColor3 = Color3.fromRGB(55, 55, 60)
+            }):Play()
+        end)
+        
+        commandFrame.MouseLeave:Connect(function()
+            TweenService:Create(commandFrame, TweenInfo.new(0.2), {
+                BackgroundTransparency = 0.9,
+                BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+            }):Play()
+        end)
+    end
+end
+
+-- Create all categories in order
+for _, category in ipairs(commandCategories) do
+    createCategory(category)
+end
+
+-- Update scrolling frame size
+categoriesLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, categoriesLayout.AbsoluteContentSize.Y + 20)
+end)
+
+-- Dragging functionality
+header.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragStartPos = input.Position
+        frameStartPos = frame.Position
+        isDragging = true
+        
+        -- Pulse effect when starting drag
+        pulseOutline.Transparency = 0
+        TweenService:Create(pulseOutline, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Transparency = 1
+        }):Play()
+    end
+end)
+
+header.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        isDragging = false
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStartPos
+        frame.Position = UDim2.new(
+            frameStartPos.X.Scale, 
+            frameStartPos.X.Offset + delta.X,
+            frameStartPos.Y.Scale,
+            frameStartPos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+-- Toggle function
+local function ShowCmds()
+    screenGui.Enabled = not screenGui.Enabled
+    
+    if screenGui.Enabled then
+        frame.Size = UDim2.new(0, 0, 0.4, 0)
+        frame.Position = UDim2.new(0.5, 0, 0.3, 0)
+        frame.BackgroundTransparency = 1
+        
+        TweenService:Create(frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Size = UDim2.new(0.3, 0, 0.4, 0),
+            Position = UDim2.new(0.35, 0, 0.3, 0),
+            BackgroundTransparency = 0.1
+        }):Play()
+    else
+        TweenService:Create(frame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+            Size = UDim2.new(0, 0, 0.4, 0),
+            Position = UDim2.new(0.5, 0, 0.3, 0),
+            BackgroundTransparency = 1
+        }):Play()
+    end
+end
+
+-- Connect close button
+closeButton.MouseButton1Click:Connect(ShowCmds)
+
+ShowCmds()
