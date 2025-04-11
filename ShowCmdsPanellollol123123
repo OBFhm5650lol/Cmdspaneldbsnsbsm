@@ -257,6 +257,7 @@ local commandCategories = {
             "antifling/af - Anti fling",
             "antikick/ak - Anti kick",
             "antilag/al - Anti lag",
+            "antilag2/al2 - Antilag 2nd  ver",
             "unantifling/unaf - Disable anti fling",
             "unfakelag/unflag - Disable fake lag",
             "voidprotection/vp - Void protection",
