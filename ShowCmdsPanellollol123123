@@ -169,7 +169,7 @@ local commandCategories = {
             "namelessadminv2/nav2 - NAV2",
             "players/plrs - List players",
             "reset/re - Reset character",
-            "serverhop/shop - Chnage server",
+            "serverhop/shop - Change server",
             "unctest - Unctest for exec"
         }
     },
@@ -228,6 +228,7 @@ local commandCategories = {
             "graballtools/gat - Grab all tools",
             "hitbox [value] - Resize hitbox",
             "kill [plr] - Kill player (req sword)",
+            "instantkill/ikill [plr] - instantly Kill player (req sword)",
             "loopfling/lfling - Loop fling",
             "loopkill/lkill - Loop kill (req gun/sword)",
             "orbit - Orbit player",
@@ -311,8 +312,10 @@ local commandCategories = {
             "toolgiver - Tool giver",
             "fakelag/flag - Fake lag",
             "winobby - Win obby",
+            "infoviewer -- I have Ur IP address",
             "fakechat - Fake chat message",
             "hitblox - Hitblox :D",
+            "silverware/sw - SilverWare :DD",
             "pshade - Patrick shade idk",
             "susgui/ss - 😳",
             "pcr - Starts PartControllerRemote",
