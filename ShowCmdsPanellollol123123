@@ -248,7 +248,7 @@ local commandCategories = {
             "disabletfling/dtf - Disables touchFling",
             "graballtools/gat - Grab all tools",
             "hitbox [value] - Resize hitbox",
-            "kill - instantly Kill player (req sword)",
+            "killgui - instantly Kill player (req sword)",
             "orbit - Orbit player",
             "tpto [plr] - Teleport to player"
         }
