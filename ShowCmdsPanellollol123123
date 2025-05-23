@@ -41,9 +41,7 @@ pulseOutline.Thickness = 2
 pulseOutline.Transparency = 1
 pulseOutline.Parent = frame
 
--- Dragging Implementation
-local dragStartPos, frameStartPos, isDragging
-
+-- Header for dragging
 local header = Instance.new("Frame")
 header.Name = "Header"
 header.Size = UDim2.new(1, 0, 0.12, 0)
@@ -52,44 +50,65 @@ header.BackgroundTransparency = 1
 header.ZIndex = 10
 header.Parent = frame
 
--- Improved Dragging Function
+-- Improved Dragging Implementation
 local dragging = false
 local dragInput, dragStart, startPos
 
+local function updateInput(input)
+    local delta = input.Position - dragStart
+    local newPos = UDim2.new(
+        startPos.X.Scale, 
+        startPos.X.Offset + delta.X,
+        startPos.Y.Scale, 
+        startPos.Y.Offset + delta.Y
+    )
+    
+    -- Keep the frame within screen bounds
+    local viewportSize = workspace.CurrentCamera.ViewportSize
+    local frameSize = frame.AbsoluteSize
+    
+    newPos = UDim2.new(
+        newPos.X.Scale,
+        math.clamp(newPos.X.Offset, 0, viewportSize.X - frameSize.X),
+        newPos.Y.Scale,
+        math.clamp(newPos.Y.Offset, 0, viewportSize.Y - frameSize.Y)
+    )
+    
+    frame.Position = newPos
+end
+
 header.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-		dragging = true
-		dragStart = input.Position
-		startPos = frame.Position
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = frame.Position
+        
+        -- Pulse effect when starting drag
+        pulseOutline.Transparency = 0
+        TweenService:Create(pulseOutline, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Transparency = 1
+        }):Play()
 
-		-- Pulse effect when starting drag
-		pulseOutline.Transparency = 0
-		TweenService:Create(pulseOutline, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-			Transparency = 1
-		}):Play()
+        local connection
+        connection = input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+                connection:Disconnect()
+            end
+        end)
+    end
+end)
 
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
+header.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+    end
 end)
 
 UserInputService.InputChanged:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-		dragInput = input
-	end
-end)
-
-RunService.RenderStepped:Connect(function()
-	if dragging and dragInput then
-		local delta = dragInput.Position - dragStart
-		frame.Position = UDim2.new(
-			startPos.X.Scale, startPos.X.Offset + delta.X,
-			startPos.Y.Scale, startPos.Y.Offset + delta.Y
-		)
-	end
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        updateInput(input)
+    end
 end)
 
 -- Header Visuals
@@ -151,7 +170,7 @@ categoriesContainer.BackgroundTransparency = 1
 categoriesContainer.Parent = scrollingFrame
 
 local categoriesLayout = Instance.new("UIListLayout")
-categoriesLayout.Padding = UDim.new(0, 15) -- Increased padding between categories
+categoriesLayout.Padding = UDim.new(0, 15)
 categoriesLayout.Parent = categoriesContainer
 
 -- Organized Command Categories
@@ -185,7 +204,7 @@ local commandCategories = {
             "lay - Lay down",
             "nofog - Remove fog",
             "sit - Sit down",
-            "spin [value] - Spins Hrp",
+            "spin [value] - Spins Character",
             "unfullbright/unfb - stop fb",
             "unview - Stop viewing",
             "unxray - Disable xray",
@@ -200,6 +219,7 @@ local commandCategories = {
         commands = {
             "",
             "bhop - Bunny hop",
+            "unbhop - Stop bunny hop",
             "clip - Disable noclip",
             "fly/f - Enable flight (req tpwalk)",
             "unfly/uf - Disable flight",
@@ -211,7 +231,6 @@ local commandCategories = {
             "jumppower/jp [value] - Jump power",
             "noclip - Walk through walls",
             "resetwalkspeed/resetws - Reset speed",
-            "unbhop - Stop bunny hop",
             "walkspeed/ws [value] - Speed"
         }
     },
@@ -225,12 +244,11 @@ local commandCategories = {
             "dropalltools/dat - Drop all tools",
             "fling [plr] - Fling player",
             "flingall - Fling everyone",
+            "enabletfling/etf - Enable touchFling",
+            "disabletfling/dtf - Disables touchFling",
             "graballtools/gat - Grab all tools",
             "hitbox [value] - Resize hitbox",
-            "kill [plr] - Kill player (req sword)",
-            "instantkill/ikill [plr] - instantly Kill player (req sword)",
-            "loopfling/lfling - Loop fling",
-            "loopkill/lkill - Loop kill (req gun/sword)",
+            "kill - instantly Kill player (req sword)",
             "orbit - Orbit player",
             "tpto [plr] - Teleport to player"
         }
@@ -255,11 +273,9 @@ local commandCategories = {
         color = Color3.fromRGB(0, 180, 255),
         commands = {
             "",
-            "antifling/af - Anti fling",
             "antikick/ak - Anti kick",
             "antilag/al - Anti lag",
             "antilag2/al2 - Antilag 2nd  ver",
-            "unantifling/unaf - Disable anti fling",
             "unfakelag/unflag - Disable fake lag",
             "voidprotection/vp - Void protection",
             "voidprotectionoff/dvp - Disable void protection"
@@ -279,9 +295,6 @@ local commandCategories = {
             "resetuagrav - Reset unachored gravity",
             "setuagrav [value] - Set unachored gravity",
             "moveparts/mp - Move parts",
-            "ringparts/rp - Ring parts",
-            "ringparts/rp radius [value] - Set ring radius",
-            "ringparts/rp speed [value] - Set ring speed",
             "ringpartsv2/rpv2 - Ring parts V2"
         }
     },
@@ -295,9 +308,7 @@ local commandCategories = {
             "animationspeed/as [value] - Animation speed",
             "disabletfling/dtf - Disable tool fling",
             "emitteroff/ef - Disable emitters",
-            "emitteron/en - Enable emitters",
-            "enabletfling/etf - Enable touchFling",
-            "disabletfling/dtf - Disables touchFling"
+            "emitteron/en - Enable emitters"
         }
     },
     {
@@ -305,10 +316,10 @@ local commandCategories = {
         color = Color3.fromRGB(109, 110, 108),
         commands = {
             "",
+            "ACR - AntiCheat Removal",
             "f3x/fex - F3X building tools",
             "hugtool - Hug tool",
             "rochips/rc - Starts RoChipsPanel",
-            "uwuchat [text] - UwU chat :3",
             "toolgiver - Tool giver",
             "fakelag/flag - Fake lag",
             "winobby - Win obby",
@@ -363,8 +374,8 @@ local function createCategory(categoryData)
     -- Add commands to container
     for _, cmd in ipairs(categoryData.commands) do
         local commandFrame = Instance.new("Frame")
-        commandFrame.Size = UDim2.new(1, -10, 0, 28) -- Reduced width for padding
-        commandFrame.Position = UDim2.new(0.05, 0, 0, 0) -- Centered with padding
+        commandFrame.Size = UDim2.new(1, -10, 0, 28)
+        commandFrame.Position = UDim2.new(0.05, 0, 0, 0)
         commandFrame.BackgroundTransparency = 0.9
         commandFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
         commandFrame.Parent = commandsContainer
@@ -409,39 +420,6 @@ end
 -- Update scrolling frame size
 categoriesLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
     scrollingFrame.CanvasSize = UDim2.new(0, 0, 0, categoriesLayout.AbsoluteContentSize.Y + 20)
-end)
-
--- Dragging functionality
-header.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        dragStartPos = input.Position
-        frameStartPos = frame.Position
-        isDragging = true
-        
-        -- Pulse effect when starting drag
-        pulseOutline.Transparency = 0
-        TweenService:Create(pulseOutline, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-            Transparency = 1
-        }):Play()
-    end
-end)
-
-header.InputEnded:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then
-        isDragging = false
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if isDragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-        local delta = input.Position - dragStartPos
-        frame.Position = UDim2.new(
-            frameStartPos.X.Scale, 
-            frameStartPos.X.Offset + delta.X,
-            frameStartPos.Y.Scale,
-            frameStartPos.Y.Offset + delta.Y
-        )
-    end
 end)
 
 -- Toggle function
