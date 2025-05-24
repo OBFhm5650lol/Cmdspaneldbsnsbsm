@@ -241,9 +241,9 @@ local commandCategories = {
         commands = {
             "" ,
             "activatealltools/aat - Activate all tools",
-            "god - enables godmode"
-            "ungod - disables godmode"
-            "sethealth/sethp - Sets your health"
+            "god - enables godmode",
+            "ungod - disables godmode",
+            "sethealth/sethp - Sets your health",
             "control npc/cn - Control NPC",
             "dropalltools/dat - Drop all tools",
             "fling [plr] - Fling player",
@@ -280,9 +280,7 @@ local commandCategories = {
             "antikick/ak - Anti kick",
             "antilag/al - Anti lag",
             "antilag2/al2 - Antilag 2nd  ver",
-            "unfakelag/unflag - Disable fake lag",
-            "voidprotection/vp - Void protection",
-            "voidprotectionoff/dvp - Disable void protection"
+            "unfakelag/unflag - Disable fake lag"
         }
     },
     {
@@ -298,8 +296,7 @@ local commandCategories = {
             "uninvertgrav/sigrav - Stops Inverting Gravity",
             "resetuagrav - Reset unachored gravity",
             "setuagrav [value] - Set unachored gravity",
-            "moveparts/mp - Move parts",
-            "ringpartsv2/rpv2 - Ring parts V2"
+            "moveparts/mp - Move parts"
         }
     },
     {
