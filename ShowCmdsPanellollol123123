@@ -182,11 +182,13 @@ local commandCategories = {
             "",
             "clear - Clears output",
             "cmds - Show command list",
+            "date/time/ping/FPS - basic utility",
             "dexexplorer/dex - Open Dex Explorer",
-            "infiniteyield/inf - Infinite Yield",
+            "infiniteyield/iy - Infinite Yield",
             "namelessadmin/na - Nameless Admin",
             "namelessadminv2/nav2 - NAV2",
             "players/plrs - List players",
+            "consoleline/cline - basically for pc users",
             "reset/re - Reset character",
             "serverhop/shop - Change server",
             "unctest - Unctest for exec"
@@ -239,6 +241,9 @@ local commandCategories = {
         commands = {
             "" ,
             "activatealltools/aat - Activate all tools",
+            "god - enables godmode"
+            "ungod - disables godmode"
+            "sethealth/sethp - Sets your health"
             "control npc/cn - Control NPC",
             "dropalltools/dat - Drop all tools",
             "fling [plr] - Fling player",
@@ -289,8 +294,8 @@ local commandCategories = {
             "bringunachored/bring ua - Bring unachored parts",
             "disableblackhole/dbh - Disable blackhole",
             "tornado/td - Start TornadoGui",
-            "invertgrav - unachored Invert gravity",
-            "uninvertgrav - Stops Inverting Gravity",
+            "invertgrav/igrav - unachored Invert gravity",
+            "uninvertgrav/sigrav - Stops Inverting Gravity",
             "resetuagrav - Reset unachored gravity",
             "setuagrav [value] - Set unachored gravity",
             "moveparts/mp - Move parts",
