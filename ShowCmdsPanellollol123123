@@ -182,13 +182,14 @@ local commandCategories = {
             "",
             "clear - Clears output",
             "cmds - Show command list",
-            "date/time/ping/FPS - basic utility",
+            "date/time/ping/fps/console/c - basic utility",
             "dexexplorer/dex - Open Dex Explorer",
             "infiniteyield/iy - Infinite Yield",
             "namelessadmin/na - Nameless Admin",
             "namelessadminv2/nav2 - NAV2",
-            "players/plrs - List players",
+            "quirkycmd/qcmd - (REQ, remotes) [Ban]"
             "consoleline/cline - basically for pc users",
+            "players/plrs - List players",
             "reset/re - Reset character",
             "serverhop/shop - Change server",
             "unctest - Unctest for exec"
@@ -202,7 +203,7 @@ local commandCategories = {
             "changerig/rig - Change character rig",
             "fov [value] - Field of view",
             "fullbright/fb - Bright world",
-            "invistoggle - Toggle invisibility",
+            "invistoggle - InvisToggle",
             "lay - Lay down",
             "nofog - Remove fog",
             "sit - Sit down",
@@ -223,7 +224,8 @@ local commandCategories = {
             "bhop - Bunny hop",
             "unbhop - Stop bunny hop",
             "clip - Disable noclip",
-            "fly - Enable flight",
+            "flygui - Flying Gui",
+            "autorespawn/autore - tps to ur deathpos when u die"
             "stoptpwalk/stpw - Stop teleport",
             "tpwalk/tpw - Teleport walk",
             "tpwalkspeed/tpws [value] - TP walk speed",
@@ -262,7 +264,6 @@ local commandCategories = {
         color = Color3.fromRGB(180, 255, 255),
         commands = {
             "",
-            "aimassist/aim - aimlock",
             "boxesp/besp - Box ESP",
             "disableboxesp/dbesp - Disable Box ESP",
             "disablenameesp/dnesp - Disable Name ESP",
