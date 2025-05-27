@@ -10,7 +10,7 @@ local RunService = game:GetService("RunService")
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CommandPanel"
 screenGui.ResetOnSpawn = false
-screenGui.Enabled = false
+screenGui.Enabled = true
 screenGui.Parent = PlayerGui
 
 -- Create Main Frame
@@ -187,7 +187,7 @@ local commandCategories = {
             "infiniteyield/iy - Infinite Yield",
             "namelessadmin/na - Nameless Admin",
             "namelessadminv2/nav2 - NAV2",
-            "quirkycmd/qcmd - (REQ, remotes) [Ban]"
+            "quirkycmd/qcmd - (REQ, remotes) [Ban]",
             "consoleline/cline - basically for pc users",
             "players/plrs - List players",
             "reset/re - Reset character",
