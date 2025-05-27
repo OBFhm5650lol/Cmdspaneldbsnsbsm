@@ -6,11 +6,16 @@ local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 
+-- Wait for player to fully load
+if not LocalPlayer.Character then
+    LocalPlayer.CharacterAdded:Wait()
+end
+
 -- Create ScreenGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CommandPanel"
 screenGui.ResetOnSpawn = false
-screenGui.Enabled = true
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling -- Important for proper layering
 screenGui.Parent = PlayerGui
 
 -- Create Main Frame
@@ -162,6 +167,7 @@ scrollingFrame.Position = UDim2.new(0.025, 0, 0.13, 0)
 scrollingFrame.BackgroundTransparency = 1
 scrollingFrame.ScrollBarThickness = 4
 scrollingFrame.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 110)
+scrollingFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y -- Automatically size canvas
 scrollingFrame.Parent = frame
 
 local categoriesContainer = Instance.new("Frame")
@@ -225,7 +231,7 @@ local commandCategories = {
             "unbhop - Stop bunny hop",
             "clip - Disable noclip",
             "flygui - Flying Gui",
-            "autorespawn/autore - tps to ur deathpos when u die"
+            "autorespawn/autore - tps to ur deathpos when u die",
             "stoptpwalk/stpw - Stop teleport",
             "tpwalk/tpw - Teleport walk",
             "tpwalkspeed/tpws [value] - TP walk speed",
@@ -450,4 +456,5 @@ end
 -- Connect close button
 closeButton.MouseButton1Click:Connect(ShowCmds)
 
-ShowCmds()
+-- Initialize the GUI as visible
+screenGui.Enabled = true
