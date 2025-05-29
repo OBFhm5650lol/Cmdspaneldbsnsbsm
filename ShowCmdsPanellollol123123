@@ -187,8 +187,11 @@ local commandCategories = {
         color = Color3.fromRGB(255, 180, 255),
         commands = {
             "",
-            "[-] Fixed Bugs 15",
-            "[+] added new updatelog"
+            "[-] Fixed Bugs 25",
+            "[+] Fixed All Fling Cmds",
+            "[+] Fixed Killgui Bugs",
+            "[+] Brought back Antifling",
+            "[+] Enhanced Fakelag"
         }
     },
     {
@@ -264,10 +267,12 @@ local commandCategories = {
             "sethealth/sethp - Sets your health",
             "control npc/cn - Control NPC",
             "dropalltools/dat - Drop all tools",
+            "antifling/af - Enables AF",
+            "antifling/af - Disables AF",
             "fling [plr] - Fling player",
             "flingall - Fling everyone",
-            "enabletfling/etf - Enable touchFling",
-            "disabletfling/dtf - Disables touchFling",
+            "touchfling/tf - Enable touchFling",
+            "untouchfling/untf - Disables touchFling",
             "graballtools/gat - Grab all tools",
             "hitbox [value] - Resize hitbox",
             "killgui - instantly Kill player (req sword)",
@@ -297,7 +302,6 @@ local commandCategories = {
             "antikick/ak - Anti kick",
             "antilag/al - Anti lag",
             "antilag2/al2 - Antilag 2nd  ver",
-            "unfakelag/unflag - Disable fake lag"
         }
     },
     {
@@ -339,7 +343,9 @@ local commandCategories = {
             "hugtool - Hug tool",
             "rochips/rc - Starts RoChipsPanel",
             "toolgiver - Tool giver",
-            "fakelag/flag - Fake lag",
+            "seizure/Seizure - FakeLagOld",
+            "fakelag/flag [Value] - Enables Fakelag",
+            "unfakelag/unflag - Disables Flag",
             "winobby - Win obby",
             "infoviewer -- I have Ur IP address",
             "fakechat - Fake chat message",
