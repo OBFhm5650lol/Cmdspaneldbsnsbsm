@@ -343,7 +343,7 @@ local commandCategories = {
             "hugtool - Hug tool",
             "rochips/rc - Starts RoChipsPanel",
             "toolgiver - Tool giver",
-            "seizure/Seizure - FakeLagOld",
+            "seizure/unseizure - FakeLagOld",
             "fakelag/flag [Value] - Enables Fakelag",
             "unfakelag/unflag - Disables Flag",
             "winobby - Win obby",
