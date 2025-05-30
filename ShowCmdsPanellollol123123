@@ -187,11 +187,11 @@ local commandCategories = {
         color = Color3.fromRGB(255, 180, 255),
         commands = {
             "",
-            "[-] Fixed Bugs 25",
-            "[+] Fixed All Fling Cmds",
+            "[-] Fixed Bugs 19",
+            "[+] Updated [player/] Cmds",
             "[+] Fixed Killgui Bugs",
-            "[+] Brought back Antifling",
-            "[+] Enhanced Fakelag"
+            "[+] Added [Invis] Cmd",
+            "[+] General Improvements"
         }
     },
     {
@@ -223,6 +223,8 @@ local commandCategories = {
             "fov [value] - Field of view",
             "fullbright/fb - Bright world",
             "invistoggle - InvisToggle",
+            "invisible/invis - Makes you Invisible",
+            "visible/vis - Makes you visible",
             "lay - Lay down",
             "nofog - Remove fog",
             "sit - Sit down",
