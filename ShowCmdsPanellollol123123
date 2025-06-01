@@ -188,10 +188,9 @@ local commandCategories = {
         commands = {
             "",
             "[-] Fixed Bugs 19",
-            "[+] Updated [player/] Cmds",
-            "[+] Fixed Killgui Bugs",
-            "[+] Added [Invis] Cmd",
-            "[+] General Improvements"
+            "[+] Added [autouse] cmds",
+            "[+] Brought back [VoidP]",
+            "[+] Added [toolcontrol] cmd"
         }
     },
     {
@@ -211,6 +210,7 @@ local commandCategories = {
             "players/plrs - List players",
             "reset/re - Reset character",
             "serverhop/shop - Change server",
+            "rejoin/rj - Change server",
             "unctest - Unctest for exec"
         }
     },
@@ -246,7 +246,7 @@ local commandCategories = {
             "unbhop - Stop bunny hop",
             "clip - Disable noclip",
             "flygui - Flying Gui",
-            "autorespawn/autore - tps to ur deathpos when u die",
+            "autorespawn/autore - tps to ur deathpos",
             "stoptpwalk/stpw - Stop teleport",
             "tpwalk/tpw - Teleport walk",
             "tpwalkspeed/tpws [value] - TP walk speed",
@@ -264,8 +264,10 @@ local commandCategories = {
         commands = {
             "" ,
             "activatealltools/aat - Activate all tools",
-            "god - enables godmode",
-            "ungod - disables godmode",
+            "autouse/au - loopuse selected tools",
+            "unautouse/unau - stops AutoUse",
+            "graballtools/gat - Grab all tools",
+            "toolcontrol - control any tool (REQ, Tool+hold)",
             "sethealth/sethp - Sets your health",
             "control npc/cn - Control NPC",
             "dropalltools/dat - Drop all tools",
@@ -275,9 +277,8 @@ local commandCategories = {
             "flingall - Fling everyone",
             "touchfling/tf - Enable touchFling",
             "untouchfling/untf - Disables touchFling",
-            "graballtools/gat - Grab all tools",
             "hitbox [value] - Resize hitbox",
-            "killgui - instantly Kill player (req sword)",
+            "killgui/kill - show an a killgui (req sword)",
             "orbit - Orbit player",
             "tpto [plr] - Teleport to player"
         }
@@ -304,6 +305,10 @@ local commandCategories = {
             "antikick/ak - Anti kick",
             "antilag/al - Anti lag",
             "antilag2/al2 - Antilag 2nd  ver",
+            "voidprotection/voidp - prevents you from falling to void",
+            "unvoidprotection/unvoidp - stops VoidProtection",
+            "god - enables godmode",
+            "ungod - disables godmode"
         }
     },
     {
