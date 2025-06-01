@@ -360,6 +360,8 @@ local commandCategories = {
             "silverware/sw - SilverWare :DD",
             "pshade - Patrick shade idk",
             "susgui/ss - 😳",
+            "bang [plr] - 💅",
+            "unbang - 👅",
             "pcr - Starts PartControllerRemote",
             "🍪"
         }
