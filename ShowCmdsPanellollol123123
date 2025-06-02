@@ -245,7 +245,7 @@ local commandCategories = {
             "bhop - Bunny hop",
             "unbhop - Stop bunny hop",
             "clip - Disable noclip",
-            "flygui - Flying Gui",
+            "fly/flygui - Flying Gui",
             "autorespawn/autore - tps to ur deathpos",
             "stoptpwalk/stpw - Stop teleport",
             "tpwalk/tpw - Teleport walk",
