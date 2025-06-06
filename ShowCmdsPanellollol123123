@@ -188,9 +188,9 @@ local commandCategories = {
         commands = {
             "",
             "[-] Fixed Bugs 19",
-            "[+] Added [autouse] cmds",
-            "[+] Brought back [VoidP]",
-            "[+] Added [toolcontrol] cmd"
+            "[+] Cmds Added",
+            "",
+            "tptool\nshopper\nunvcban\nadminabuse\ntoolesp\naca\nf3xpanel\nETC"
         }
     },
     {
@@ -210,6 +210,7 @@ local commandCategories = {
             "players/plrs - List players",
             "reset/re - Reset character",
             "serverhop/shop - Change server",
+            "serverhopper/shoppper - Server Changer",
             "rejoin/rj - Rejoin server",
             "unctest - Unctest for exec"
         }
@@ -279,6 +280,7 @@ local commandCategories = {
             "hitbox [value] - Resize hitbox",
             "killgui/kill - show an a killgui (req sword)",
             "orbit - Orbit player",
+            "tptool - teleport tool",
             "tpto [plr] - Teleport to player"
         }
     },
@@ -287,13 +289,15 @@ local commandCategories = {
         color = Color3.fromRGB(180, 255, 255),
         commands = {
             "",
+            "esp - Enable Highlight ESP",
+            "unesp - Disable Highlight ESP",
             "boxesp/besp - Box ESP",
             "disableboxesp/dbesp - Disable Box ESP",
             "disablenameesp/dnesp - Disable Name ESP",
             "drawchat - Draw chat",
             "esp - Enable Highlight ESP",
-            "nameesp/nesp - Name ESP",
-            "unesp - Disable Highlight ESP"
+            "toolesp - esps all tools",
+            "nameesp/nesp - Name ESP"
         }
     },
     {
@@ -306,6 +310,8 @@ local commandCategories = {
             "antilag2/al2 - Antilag 2nd  ver",
             "voidprotection/voidp - prevents you from falling to void",
             "unvoidprotection/unvoidp - stops VoidProtection",
+            "acr - AntiCheat Remover",
+            "aca - AntiCheat Analyser",
             "god - enables godmode",
             "ungod - disables godmode"
         }
@@ -344,8 +350,9 @@ local commandCategories = {
         color = Color3.fromRGB(109, 110, 108),
         commands = {
             "",
-            "ACR - AntiCheat Removal",
             "f3x/fex - F3X building tools",
+            "f3xpanel/fexpanel - F3X Panel",
+            "adminabuse/aa - HD AdminAbuserGui",
             "hugtool - Hug tool",
             "rochips/rc - Starts RoChipsPanel",
             "toolgiver - Tool giver",
@@ -354,7 +361,6 @@ local commandCategories = {
             "unfakelag/unflag - Disables Flag",
             "winobby - Win obby",
             "infoviewer -- I have Ur IP address",
-            "fakechat - Fake chat message",
             "hitblox - Hitblox :D",
             "silverware/sw - SilverWare :DD",
             "pshade - Patrick shade idk",
