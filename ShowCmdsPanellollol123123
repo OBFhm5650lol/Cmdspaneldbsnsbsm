@@ -190,7 +190,8 @@ local commandCategories = {
             "[-] Fixed Bugs 19",
             "[+] Cmds Added",
             "",
-            "tptool\nshopper\nunvcban\nadminabuse\ntoolesp\naca\nf3xpanel\nETC"
+            "tptool\nshopper\nunvcban\nadminabuse\ntoolesp\naca\nf3xpanel\nETC",
+            ""
         }
     },
     {
