@@ -206,7 +206,7 @@ local commandCategories = {
             "infiniteyield/iy - Infinite Yield",
             "namelessadmin/na - Nameless Admin",
             "namelessadminv2/nav2 - NAV2",
-            "quirkycmd/qcmd - (REQ, remotes) [Ban]",
+            "quirkycmd/qcmd - (REQ, Backdoor) [Ban]",
             "consoleline/cline - basically for pc users",
             "players/plrs - List players",
             "reset/re - Reset character",
