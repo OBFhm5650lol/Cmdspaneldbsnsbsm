@@ -211,7 +211,7 @@ local commandCategories = {
             "players/plrs - List players",
             "reset/re - Reset character",
             "serverhop/shop - Change server",
-            "serverhopper/shoppper - Server Changer",
+            "serverhopper/shopper - Server Changer",
             "rejoin/rj - Rejoin server",
             "unctest - Unctest for exec"
         }
